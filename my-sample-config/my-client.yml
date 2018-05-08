@@ -1,2 +1,5 @@
 my-config:
   appName: my-app
+juss:
+    fastdfs:
+      webConetext: http://2.2.2.2/
