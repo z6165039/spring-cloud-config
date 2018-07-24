@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MySampleRestController {
 	@Value("${my-config.appName}")
 	private String appName;
-	
+
 	@RequestMapping("/app-name")
 	public String getAppName() {
 		return appName;
