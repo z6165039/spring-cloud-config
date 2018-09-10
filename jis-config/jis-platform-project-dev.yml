@@ -1,0 +1,111 @@
+spring:
+    profiles:
+      active: dev
+    application:
+        name: jis-platform-project
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+    datasource:
+        name: jusspmsDataSource
+        url: jdbc:mysql://192.168.7.38:3306/jis-platform-project?useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true
+        username: jis-platform-project
+        password: jis-platform-project
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+    jmx:
+        enabled : false
+    http:
+        multipart:
+                  max-file-size: 100Mb
+                  max-request-size: 100Mb
+    #session redis 相关
+    redis:
+        database: 5
+        host: 192.168.7.39
+        pool:
+            max-active: 20
+
+    session:
+        store-type: redis
+
+    rabbitmq:
+        host: 192.168.7.39
+        port: 5672
+        username: guest
+        password: guest
+mybatis:
+    basepackage: com.jis.platform.project.mapper
+    xmlLocation: classpath:mapper/**/*.xml
+
+server:
+    port: 7020
+
+swagger:
+    basepackage: com.jis.platform.project
+    service:
+        name: security admin
+
+
+auth:
+  serviceId: jis-platform-security-auth
+  user:
+    token-header: Authorization
+  client:
+    id: jis-platform-project
+    secret: 123456
+    token-header: client-token
+
+
+
+#文件相关的  路径
+fileurl:
+     bean:
+       knowledgeFilePath: /home/juss/jis-platform-project/knowledgeFile/
+       taskFilePath: /home/juss/jis-platform-project/taskFile/
+       excelUploadTempDir: /home/juss/jis-platform-project/excel/upload/
+
+JisSwitch:
+     bean:
+       isJisApi: true
+
+logging:
+    file: jis-platform-project.log
+    level:
+          com.jis.platform.project: DEBUG
+
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        ip-address: 192.168.7.65
+        prefer-ip-address: true
+        lease-expiration-duration-in-seconds: 30
+        lease-renewal-interval-in-seconds: 10
+    client:
+        register-with-eureka: true
+        serviceUrl:
+           defaultZone: http://${EUREKA_HOST:192.168.7.65}:${EUREKA_PORT:8761}/eureka/
+
+
+#内部服务调用
+sdk:
+  url:
+    enterprise: 192.168.7.65:8763
+    backend: 192.168.7.65:8768
